@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>RaspberryPi Rover</title>
+<script type="text/javascript">
+
+function button(value) {
+  var request = false;
+  if(window.XMLHttpRequest){
+    request = new XMLHttpRequest();
+  }else if(window.ActiveXObject){
+    try {
+      request = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch(e) {
+      request = new ActiveXObject("Msxml.XMLHTTP");
+    }
+  }
+  //XMLHttpRequest failed
+  if(!request){
+    alert("XMLHttpRequest failed...");
+    return false;
+  }
+  //query
+  var send = 'code=' + value;
+  request.open('POST','/rover.php',true);
+
+  //HTML header
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+  request.setRequestHeader('Content-Length',send.length);
+  request.setRequestHeader('Connection','close');
+  request.send(send);
+}
+
+</script>
+</head>
+<body>
+<img src="http://192.168.0.1:8080/?action=stream" />
+<br>
+
+<input type="button" value="right" onClick="button('right')">
+<input type="button" value="front" onClick="button('front');">
+<input type="button" value="back" onClick="button('back');">
+<input type="button" value="left" onClick="button('left');">
+<input type="button" value="stop" onClick="button('stop');">
+
+</body>
+</html>
